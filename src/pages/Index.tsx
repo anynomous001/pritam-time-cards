@@ -6,6 +6,7 @@ import { TimeSlotCard } from '@/components/TimeSlotCard';
 import { TodoForm } from '@/components/TodoForm';
 import { TodoHistory } from '@/components/TodoHistory';
 import { CalendarView } from '@/components/CalendarView';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Todo, TimeSlot } from '@/types/todo';
 import { toast } from '@/hooks/use-toast';
 
@@ -139,13 +140,16 @@ const Index = () => {
         <div className="container mx-auto px-4 py-6 max-w-7xl">
           {/* Header */}
           <header className="mb-8">
-            <div className="text-center mb-6">
-              <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-                Pritam's Time Cards
-              </h1>
-              <p className="text-muted-foreground text-lg">
-                Drag, schedule, and complete your daily tasks
-              </p>
+            <div className="flex justify-between items-start mb-6">
+              <div className="text-center flex-1">
+                <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+                  Pritam's Time Cards
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Drag, schedule, and complete your daily tasks
+                </p>
+              </div>
+              <ThemeToggle />
             </div>
             
             {/* Quick Stats */}
