@@ -5,6 +5,7 @@ import { TodoCard } from '@/components/TodoCard';
 import { TimeSlotCard } from '@/components/TimeSlotCard';
 import { TodoForm } from '@/components/TodoForm';
 import { TodoHistory } from '@/components/TodoHistory';
+import { CalendarView } from '@/components/CalendarView';
 import { Todo, TimeSlot } from '@/types/todo';
 import { toast } from '@/hooks/use-toast';
 
@@ -203,6 +204,7 @@ const Index = () => {
                 </div>
               </div>
               
+              <CalendarView todos={todos} />
               <TodoHistory todos={todos} />
             </div>
 
