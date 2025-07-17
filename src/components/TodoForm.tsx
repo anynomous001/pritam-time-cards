@@ -17,6 +17,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium');
   const [estimatedDuration, setEstimatedDuration] = useState<number>();
+  const [timeSlot, setTimeSlot] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
       description: description.trim() || undefined,
       priority,
       estimatedDuration,
+      timeSlot: timeSlot || undefined,
     });
 
     // Reset form
@@ -34,6 +36,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
     setDescription('');
     setPriority('medium');
     setEstimatedDuration(undefined);
+    setTimeSlot('');
     setIsOpen(false);
   };
 
@@ -74,7 +77,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
             className="min-h-[80px] resize-none"
           />
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             <div className="space-y-2">
               <label className="text-sm font-medium flex items-center gap-1">
                 <Flag className="w-3 h-3" />
@@ -92,20 +95,48 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
               </Select>
             </div>
             
-            <div className="space-y-2">
-              <label className="text-sm font-medium flex items-center gap-1">
-                <Clock className="w-3 h-3" />
-                Duration (min)
-              </label>
-              <Input
-                type="number"
-                placeholder="30"
-                min="5"
-                max="480"
-                step="5"
-                value={estimatedDuration || ''}
-                onChange={(e) => setEstimatedDuration(e.target.value ? parseInt(e.target.value) : undefined)}
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <label className="text-sm font-medium flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  Duration (min)
+                </label>
+                <Input
+                  type="number"
+                  placeholder="30"
+                  min="5"
+                  max="480"
+                  step="5"
+                  value={estimatedDuration || ''}
+                  onChange={(e) => setEstimatedDuration(e.target.value ? parseInt(e.target.value) : undefined)}
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  Time Slot
+                </label>
+                <Select value={timeSlot} onValueChange={setTimeSlot}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Optional" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60">
+                    <SelectItem value="">No time slot</SelectItem>
+                    {Array.from({ length: 18 }, (_, i) => {
+                      const hour = i + 6;
+                      const time = `${hour.toString().padStart(2, '0')}:00`;
+                      const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
+                      const period = hour >= 12 ? 'PM' : 'AM';
+                      return (
+                        <SelectItem key={time} value={time}>
+                          {displayHour}:00 {period}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
           

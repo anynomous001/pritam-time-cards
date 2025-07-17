@@ -91,6 +91,7 @@ export function TodoCard({ todo, onToggleComplete }: TodoCardProps) {
         <button
           onClick={(e) => {
             e.stopPropagation();
+            console.log('Toggling todo:', todo.id, 'current status:', todo.completed);
             onToggleComplete(todo.id);
           }}
           className={cn(
