@@ -17,7 +17,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium');
   const [estimatedDuration, setEstimatedDuration] = useState<number>();
-  const [timeSlot, setTimeSlot] = useState<string>('');
+  const [timeSlot, setTimeSlot] = useState<string>('none');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
       description: description.trim() || undefined,
       priority,
       estimatedDuration,
-      timeSlot: timeSlot || undefined,
+      timeSlot: timeSlot && timeSlot !== 'none' ? timeSlot : undefined,
     });
 
     // Reset form
@@ -36,7 +36,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
     setDescription('');
     setPriority('medium');
     setEstimatedDuration(undefined);
-    setTimeSlot('');
+    setTimeSlot('none');
     setIsOpen(false);
   };
 
@@ -122,7 +122,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
                     <SelectValue placeholder="Optional" />
                   </SelectTrigger>
                   <SelectContent className="max-h-60">
-                    <SelectItem value="">No time slot</SelectItem>
+                    <SelectItem value="none">No time slot</SelectItem>
                     {Array.from({ length: 18 }, (_, i) => {
                       const hour = i + 6;
                       const time = `${hour.toString().padStart(2, '0')}:00`;
