@@ -75,25 +75,29 @@ const Index = () => {
   };
 
   const toggleComplete = (todoId: string) => {
-    setTodos(prev => prev.map(todo => 
-      todo.id === todoId 
-        ? { 
-            ...todo, 
-            completed: !todo.completed,
-            completedAt: !todo.completed ? new Date() : undefined
-          }
-        : todo
-    ));
-    
-    const todo = todos.find(t => t.id === todoId);
-    if (todo) {
-      toast({
-        title: todo.completed ? "Todo unchecked" : "Todo completed! 🎉",
-        description: todo.completed 
-          ? `"${todo.title}" marked as incomplete.`
-          : `Great job completing "${todo.title}"!`
-      });
-    }
+    setTodos(prev => prev.map(todo => {
+      if (todo.id === todoId) {
+        const updatedTodo = { 
+          ...todo, 
+          completed: !todo.completed,
+          completedAt: !todo.completed ? new Date() : undefined,
+          // Remove from time slot when completed, restore when uncompleted
+          timeSlot: !todo.completed ? undefined : todo.timeSlot
+        };
+        
+        // Show appropriate toast
+        const isCompleting = !todo.completed;
+        toast({
+          title: isCompleting ? "Todo completed! 🎉" : "Todo unchecked",
+          description: isCompleting 
+            ? `Great job completing "${todo.title}"! Moved to history.`
+            : `"${todo.title}" marked as incomplete.`
+        });
+        
+        return updatedTodo;
+      }
+      return todo;
+    }));
   };
 
   const handleDragStart = (event: DragStartEvent) => {
