@@ -8,6 +8,30 @@
 
 There are several ways of editing your application.
 
+## Known Dependency Issues and Resolutions
+
+### date-fns and react-day-picker Compatibility
+
+This project uses `react-day-picker@8.10.1` which requires `date-fns@^2.28.0 || ^3.0.0`. The project has been configured to use `date-fns@^3.6.0` to ensure compatibility.
+
+If you encounter the following error when running `npm install`:
+```
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error While resolving: react-day-picker@8.10.1
+npm error Found: date-fns@4.x.x
+```
+
+This indicates a version conflict between date-fns and react-day-picker. To resolve this issue:
+
+1. Ensure that the package.json file specifies `"date-fns": "^3.6.0"` (not version 4.x)
+2. Delete the node_modules directory and package-lock.json file
+3. Run `npm install` again
+
+Alternatively, you can use one of these approaches:
+- Install with the `--legacy-peer-deps` flag: `npm install --legacy-peer-deps`
+- Update to a newer version of react-day-picker that supports date-fns v4 (if available)
+
 **Use Lovable**
 
 Simply visit the [Lovable Project](https://lovable.dev/projects/5622067a-440b-4395-8ed2-0e6518e800f6) and start prompting.
